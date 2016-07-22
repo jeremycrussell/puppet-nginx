@@ -53,8 +53,29 @@ class nginx::package::redhat (
           before   => Package['nginx'],
         }
       }
+      'passenger': {
+        if ($::operatingsystem == 'centos') or ($::operatingsystem == 'redhat') {
+          if $::operatingsystemmajrelease  >= '6' {
+            yumrepo { 'passenger':
+              baseurl  => "https://oss-binaries.phusionpassenger.com/yum/passenger/el/${::operatingsystemmajrelease}/\$basearch",
+              descr    => 'passenger repo',
+              enabled  => '1',
+              gpgcheck => '1',
+              priority => '1',
+              gpgkey   => 'https://packagecloud.io/gpg.key',
+              before   => Package['nginx'],
+            }
+            package { 'passenger':
+              ensure  => 'present',
+              require => Yumrepo['passenger'],
+            }
+          }
+        } else {
+          fail ("${package_source} only avaialbe on RedHat or Centos 6+.")
+        }
+      }
       default: {
-        fail("\$package_source must be 'nginx-stable' or 'nginx-mainline'. It was set to '${package_source}'")
+        fail("\$package_source must be 'nginx-stable', 'nginx-mainline' or 'passenger'. It was set to '${package_source}'")
       }
     }
   }
