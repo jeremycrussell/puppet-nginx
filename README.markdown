@@ -146,9 +146,9 @@ nginx::nginx_mailhosts:
 
 ## Nginx with precompiled Passenger
 
-Currently this works only for Debian family and OpenBSD.
+Currently this works only for Debian family, RHEL or CentOS 6+, and OpenBSD.
 
-On Debian it might look like:
+On Debian, RedHat or CentOS it might look like:
 ```puppet
 class { 'nginx':
   package_source  => 'passenger',
