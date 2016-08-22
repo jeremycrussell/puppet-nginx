@@ -60,7 +60,7 @@ class nginx::package::redhat (
               baseurl  => "https://oss-binaries.phusionpassenger.com/yum/passenger/el/${::operatingsystemmajrelease}/\$basearch",
               descr    => 'passenger repo',
               enabled  => '1',
-              gpgcheck => '1',
+              gpgcheck => '0',
               priority => '1',
               gpgkey   => 'https://packagecloud.io/gpg.key',
               before   => Package['nginx'],
